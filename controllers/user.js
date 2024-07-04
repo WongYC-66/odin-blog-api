@@ -27,10 +27,11 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
   })
 
   // upgrade to admin if client provides admin code
-  if (jsonData.adminCode === '123456')
+  if (jsonData.adminCode === process.env.ADMIN_CODE)
     user.isAdmin = true
 
   // checking for erros :
+
   // 1. check if username been used
   let userExisted = await User.findOne({ username: user.username })
     .collation({ locale: "en", strength: 2 })
