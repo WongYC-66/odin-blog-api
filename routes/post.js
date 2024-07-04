@@ -1,34 +1,22 @@
 var express = require('express');
 var router = express.Router();
 
+const post_controller = require('../controllers/post')
 
 /* GET all Posts. */
-router.get('/', function(req, res, next) {
-  // to do
-  res.send('get all post');
-});
+router.get('/', post_controller.posts_lists);
 
 /* POST 1 new post. */
-router.post('/', function(req, res, next) {
-  // to do
-  res.send('posting new post');
-});
+router.post('/', post_controller.posts_create_post);
 
 /* GET one post. */
-router.get('/:postId', function(req, res, next) {
-  // to do
-  res.send(`getting ${req.params.postId}`);
-});
+router.get('/:postId', post_controller.posts_read_get);
 
-router.put('/:postId', function(req, res, next) {
-  // to do
-  res.send(`updating ${req.params.postId}`);
-});
+/* Update one post. */
+router.put('/:postId', post_controller.posts_update_put);
 
-router.delete('/:postId', function(req, res, next) {
-  // to do
-  res.send(`deleting ${req.params.postId}`);
-});
+/* GET one post. */
+router.delete('/:postId', post_controller.posts_delete);
 
 /*
 get v1/posts/

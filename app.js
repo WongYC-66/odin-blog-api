@@ -3,13 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport')
 
 var indexRouter = require('./routes/index');
 var postRouter = require('./routes/post');
 var commentRouter = require('./routes/comment');
 var userRouter = require('./routes/user');
 
-require('dotenv').config()
+if(process.env.NODE_ENV != 'production')
+  require('dotenv').config()  // import .env environment variable file
 
 var app = express();
 
@@ -30,9 +32,15 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passpoth configuration set up
+require('./passportConfig')
+app.use(passport.initialize())
+// app.use(passport.session())
+
 
 app.use('/', indexRouter);
 app.use('/v1/user/', userRouter);

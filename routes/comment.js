@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router({ mergeParams: true })
 
+const comment_controller = require('../controllers/comment')
+
 
 /* GET all comments for postId */
 router.get('/', function(req, res, next) {

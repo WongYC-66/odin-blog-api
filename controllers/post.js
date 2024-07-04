@@ -1,38 +1,44 @@
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
-// const User = require('../model/user')
-// const Message = require('../model/message')
+const Post = require('../model/post')
+const Comment = require('../model/comment')
 
-// Handles new message Post Request
-exports.message_post = [
-  body("title")
-    .escape(),
-  body("message")
-    .escape(),
+// GET list of all posts
+exports.posts_lists = asyncHandler(async (req, res, next) => {
 
-  asyncHandler(async (req, res, next) => {
-    if (!req.isAuthenticated())
-      res.redirect("/")
-    const message = new Message({
-      title: req.body.title,
-      message: req.body.message,
-      user: req.user,
-      timestamp: new Date(),
-    })
+  res.json('getting all posts_list')
+})
 
-    await message.save()
-    res.redirect('/')
+// POST 1 new post
+exports.posts_create_post = asyncHandler(async (req, res, next) => {
+  let jsonData = req.body
+
+  // console.log(jsonData)
+  let newPost = new Post({
+    title: jsonData.title,
+    contents: jsonData.contents,
+    user: jsonData.user,
+    timestamp: new Date(),
+    isPublished: jsonData.isPublished,
   })
-];
 
-// handle admin delete post 
-exports.message_delete_post = asyncHandler(async (req, res, next) => {
-  if (req.isAuthenticated() && req.user.isAdmin) {
-    let postId = req.body.msgId
-    await Message.findByIdAndDelete(postId)
-    res.redirect("/");
-  } else {
-    res.redirect("/");
-  }
-});
+  await newPost.save()
+  res.json(newPost);
+})
+
+// Get 1 post detail from postId
+exports.posts_read_get = asyncHandler(async (req, res, next) => {
+  res.send(`getting ${req.params.postId}`);
+})
+
+// Update 1 previous post
+exports.posts_update_put = asyncHandler(async (req, res, next) => {
+  res.send(`updating ${req.params.postId}`);
+})
+
+// Get 1 post
+exports.posts_delete = asyncHandler(async (req, res, next) => {
+  res.send(`deleting ${req.params.postId}`);
+})
+
