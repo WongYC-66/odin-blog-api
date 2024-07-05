@@ -1,23 +1,45 @@
-POST http://localhost:3000/v1/user/sign-up/
+POST http://localhost:3000/v1/user/sign-in/
 content-type: application/json
 
 {
-    "username": "admin",
-    "password": "admin",
-    "confirmPassword": "admin",
-    "isAdmin": "false",
-    "adminCode": "123456"
+    "username": "admin1",
+    "password": "admin1"
+}
+
+###
+
+POST http://localhost:3000/v1/user/sign-up/
+content-type: application/json
+
+
+{
+    "username": "user7",
+    "password": "user7",
+    "confirmPassword": "user7",
+    "adminCode": "123456789"
+}
+
+###
+
+GET http://localhost:3000/v1/posts
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODYzMjVhNjFjNmMxNGQwYWFhZWMwOSIsInVzZXJuYW1lIjoiYWRtaW4xIiwicGFzc3dvcmQiOiIiLCJpc0FkbWluIjpmYWxzZSwiX192IjowfSwiaWF0IjoxNzIwMTUwMTM2LCJleHAiOjE3MjAyMzY1MzZ9.AldLIHvFBAJzMUCYzSxwZJxVGDBmBu6goqtLkbLs8jo
+
+
+{
+    
 }
 
 ###
 
 POST http://localhost:3000/v1/posts
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODYzMjVhNjFjNmMxNGQwYWFhZWMwOSIsInVzZXJuYW1lIjoiYWRtaW4xIiwicGFzc3dvcmQiOiIiLCJpc0FkbWluIjpmYWxzZSwiX192IjowfSwiaWF0IjoxNzIwMTUwMTM2LCJleHAiOjE3MjAyMzY1MzZ9.AldLIHvFBAJzMUCYzSxwZJxVGDBmBu6goqtLkbLs8jo
+
 
 {
     "title": "test-title",
     "contents": "test-title",
-    "user": "test-user",
     "isPublished": "true"
 }
 

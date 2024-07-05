@@ -8,6 +8,15 @@ const UserSchema = new Schema({
   isAdmin: { type: Boolean, default: false },
 });
 
+UserSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.isAdmin;
+
+  return userObject;
+};
 
 // Export model
 module.exports = mongoose.model("User", UserSchema);

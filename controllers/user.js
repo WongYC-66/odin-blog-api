@@ -1,18 +1,42 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require('bcrypt')
+var jwt = require('jsonwebtoken')
 
 const User = require('../model/user')
-// const passport = require('passport')
 
 // Sign in with passport session authentication
 exports.sign_in_post = asyncHandler(async (req, res, next) => {
-  // todo
-  res.json("logging in")
-})
-// exports.sign_in_post = passport.authenticate("local", {
-//   successRedirect: "/",
-//   failureRedirect: "/sign-in"
-// })
+
+  let jsonData = req.body
+
+  // username check
+  let user = await User.findOne({ username: jsonData.username })
+
+  if (!user) {
+    return res.json({
+      error: "username not found"
+    })
+  };
+
+  const match = await bcrypt.compare(jsonData.password, user.password);
+  // password check 
+  if (!match) {
+    // passwords do not match!
+    return res.json({
+      error: "incorrect password"
+    })
+  }
+  
+  user = user.toJSON()  // remove sensitve information e.g password
+  // success, send JWToken to client
+  jwt.sign({ user }, process.env.JWT_SECRET_KEY, {expiresIn: '1d'}, (err, token) => {
+    if (err) {
+      return next(err)
+    }
+    res.json({token})
+  });
+
+});
 
 // Handles User Sign Up Post Request, proceed to register into database
 exports.sign_up_post = asyncHandler(async (req, res, next) => {
@@ -43,7 +67,7 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
   }
 
   // 2. check if password match with confirm password
-  if(jsonData.password != jsonData.confirmPassword){
+  if (jsonData.password != jsonData.confirmPassword) {
     return res.json({
       error: "password doesn't match with confirm password"
     })
@@ -58,23 +82,27 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
       user.password = hashedPassword
       await user.save();
       return res.json({
-        success : `sign up success with username ${user.username}`
+        success: `sign up success with username ${user.username}`
       })
     } catch (err) {
       return next(err);
     }
   })
+
+  user = user.toJSON()  // remove sensitve information e.g password
+  // success, send JWToken to client
+  jwt.sign({ user }, process.env.JWT_SECRET_KEY, (err, token) => {
+    if (err) {
+      return next(err)
+    }
+
+    res.json({token})
+  });
 });
 
 
 // log out
 exports.sign_out_get = asyncHandler(async (req, res, next) => {
-  // todo
-  res.json("logging out")
-  // req.logout((err) => {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   res.redirect("/");
-  // });
+  // delete front-end jwt
+  res.json("logging out, token deleted")
 });
