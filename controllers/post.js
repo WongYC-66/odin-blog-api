@@ -52,6 +52,11 @@ exports.posts_create_post = [
       }
 
       const user = await User.findOne({ username: authData.user.username });
+      // not an admin, denied
+      if (!user.isAdmin) {
+        return res.sendStatus(403)  // forbidden
+      }
+
 
       let newPost = new Post({
         title: jsonData.title,
@@ -83,6 +88,7 @@ exports.posts_read_get = [
       }
 
       try {
+
         let post = await Post.findById(req.params.postId)
           .populate("user")
           .select("-password")

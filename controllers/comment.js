@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 var jwt = require('jsonwebtoken')
 
 const Comment = require('../model/comment')
-const Post = require('../model/post')
 const User = require('../model/user')
 
 const verifyTokenExist = require('../controllers/jwt').verifyTokenExist
@@ -80,9 +79,16 @@ exports.comment_update_put = [
         })
       }
 
-      const user = await User.findOne({ username: authData.user.username });
-
-      const oriComment = await Comment.findById(req.params.commentId);
+      try {
+        var user = await User.findOne({ username: authData.user.username });
+        var oriComment = await Comment.findById(req.params.commentId)
+          .populate("user")
+          .exec();
+      } catch {
+        return res.json({
+          error: "postId incorrect or error"
+        })
+      }
 
       // not found in database
       if (!user || !oriComment) {
@@ -92,7 +98,7 @@ exports.comment_update_put = [
       }
 
       // not authorized
-      if (!user.isAdmin && oriComment.user.username !== authData.user.username) {
+      if (!user.isAdmin && oriComment.user.username !== user.username) {
         return res.sendStatus(403)  // forbidden
       }
 
@@ -126,7 +132,9 @@ exports.comment_delete = [
 
       try {
         var user = await User.findOne({ username: authData.user.username });
-        var oriComment = await Comment.findById(req.params.commentId);
+        var oriComment = await Comment.findById(req.params.commentId)
+          .populate("user")
+          .exec();;
       } catch {
         return res.json({
           error: "postId incorrect or error"
@@ -140,7 +148,7 @@ exports.comment_delete = [
       }
 
       // not authorized
-      if (!user.isAdmin && oriComment.user.username !== authData.user.username) {
+      if (!user.isAdmin && oriComment.user.username !== user.username) {
         return res.sendStatus(403)  // forbidden
       }
 
