@@ -156,7 +156,7 @@ exports.comment_delete = [
 
       // deleted success
       res.json({
-        message: `deleted post, id : ${req.params.commentId}`,
+        message: `deleted comment, id : ${req.params.commentId}`,
       })
 
     })
