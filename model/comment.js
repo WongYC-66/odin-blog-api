@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
   text: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User"},
-  postId: { type: Schema.Types.ObjectId, ref: "Post"},
+  postId: { type: String, required: true },
   timestamp: { type: Date, required: true },
 });
 

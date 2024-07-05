@@ -5,28 +5,16 @@ const comment_controller = require('../controllers/comment')
 
 
 /* GET all comments for postId */
-router.get('/', function(req, res, next) {
-  // todo
-  res.send(`getiing all comments for, ${req.params.postId}`);
-});
+router.get('/:postId', comment_controller.comment_list);
 
 /* Post one new comment for postId */
-router.post('/', function(req, res, next) {
-  // todo
-  res.send(`posting new comment for, ${req.params.postId}`);
-});
+router.post('/:postId', comment_controller.create_comment_post);
 
 /* Update one new comment for postId */
-router.put('/', function(req, res, next) {
-  // todo
-  res.send(`updating new comment for, ${req.params.postId}`);
-});
+router.put('/:commentId', comment_controller.comment_update_put);
 
 /* Delete one new comment for postId */
-router.delete('/', function(req, res, next) {
-  // todo
-  res.send(`deleting new comment for, ${req.params.postId}`);
-});
+router.delete('/:commentId', comment_controller.comment_delete);
 
 /*
 
@@ -37,10 +25,10 @@ get v1/posts/:postId
 put v1/posts/:postId
 delete v1/posts/:postId
 
-get v1/posts/:postId/comments
-post v1/posts/:postId/comments
-put v1/posts/:postId/comments
-delete v1/:postId/comments
+get v1/comments/:postId/
+post v1/comments/:postId/
+put v1/comments/:commentId/
+delete v1/comments/:commentId/
 
 posts v1/user-sign-in
 posts v1/user-sign-up

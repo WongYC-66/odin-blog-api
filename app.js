@@ -40,7 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/v1/user/', userRouter);
 app.use('/v1/posts/', postRouter);
-app.use('/v1/posts/:postId/comments/', commentRouter);
+app.use('/v1/comments/', commentRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

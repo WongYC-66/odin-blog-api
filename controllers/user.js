@@ -26,14 +26,14 @@ exports.sign_in_post = asyncHandler(async (req, res, next) => {
       error: "incorrect password"
     })
   }
-  
+
   user = user.toJSON()  // remove sensitve information e.g password
   // success, send JWToken to client
-  jwt.sign({ user }, process.env.JWT_SECRET_KEY, {expiresIn: '1d'}, (err, token) => {
+  jwt.sign({ user }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' }, (err, token) => {
     if (err) {
       return next(err)
     }
-    res.json({token})
+    res.json({ token })
   });
 
 });
@@ -81,23 +81,23 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
     try {
       user.password = hashedPassword
       await user.save();
-      return res.json({
-        success: `sign up success with username ${user.username}`
-      })
+      // success, send JWToken to client
+      jwt.sign({ user }, process.env.JWT_SECRET_KEY, (err, token) => {
+        if (err) {
+          return next(err)
+        }
+
+        res.json({ 
+          message : `success sign up for username : ${user.username}`,
+          token
+         })
+      });
     } catch (err) {
       return next(err);
     }
   })
 
-  user = user.toJSON()  // remove sensitve information e.g password
-  // success, send JWToken to client
-  jwt.sign({ user }, process.env.JWT_SECRET_KEY, (err, token) => {
-    if (err) {
-      return next(err)
-    }
 
-    res.json({token})
-  });
 });
 
 

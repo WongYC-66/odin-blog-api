@@ -1,10 +1,8 @@
-const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 var jwt = require('jsonwebtoken')
 
 const Post = require('../model/post')
 const User = require('../model/user')
-const Comment = require('../model/comment')
 
 const verifyTokenExist = require('../controllers/jwt').verifyTokenExist
 
@@ -20,14 +18,14 @@ exports.posts_lists = [
       }
 
       let allPosts = await Post.find()
-        .sort({timestamp: -1})
+        .populate("user")
+        .select("-password")
+        .sort({ timestamp: -1 })
         .exec()
 
       res.json({
         message: 'getting all posts_list',
         allPosts,
-        authData,
-        timestamp: new Date(),
       })
     })
   })
@@ -46,8 +44,8 @@ exports.posts_create_post = [
 
       let jsonData = req.body
 
-      const user = await User.findOne({ username: jsonData.username });
-
+      const user = await User.findOne({ username: authData.user.username });
+      console.log(user)
       let newPost = new Post({
         title: jsonData.title,
         contents: jsonData.contents,
@@ -57,23 +55,137 @@ exports.posts_create_post = [
       })
 
       await newPost.save()
-      res.json(newPost);
+
+      res.json({
+        message: 'post created successfully',
+        newPost,
+      })
     })
   })
 ]
 
 // Get 1 post detail from postId
-exports.posts_read_get = asyncHandler(async (req, res, next) => {
-  res.send(`getting ${req.params.postId}`);
-})
+exports.posts_read_get = [
+
+  verifyTokenExist,
+
+  asyncHandler(async (req, res, next) => {
+    jwt.verify(req.token, process.env.JWT_SECRET_KEY, async (err, authData) => {
+      if (err) {
+        return res.sendStatus(403)  // forbidden
+      }
+
+      try {
+        let post = await Post.findById(req.params.postId)
+          .populate("user")
+          .select("-password")
+          .exec()
+
+        if (!post) {
+          // post not found in database
+          return res.sendStatus(409)
+        }
+
+        // read success
+        res.json({
+          message: `getting post by id : ${req.params.postId}`,
+          post,
+        })
+
+      } catch {
+        return res.json({
+          error: "postId incorrect or error"
+        })
+      }
+
+    })
+  })
+]
 
 // Update 1 previous post
-exports.posts_update_put = asyncHandler(async (req, res, next) => {
-  res.send(`updating ${req.params.postId}`);
-})
+exports.posts_update_put = [
 
+  verifyTokenExist,
+
+  asyncHandler(async (req, res, next) => {
+    jwt.verify(req.token, process.env.JWT_SECRET_KEY, async (err, authData) => {
+      if (err) {
+        return res.sendStatus(403)  // forbidden
+      }
+
+      let jsonData = req.body
+
+      const user = await User.findOne({ username: authData.user.username });
+      // not an admin, denied
+      if (!user.isAdmin) {
+        return res.sendStatus(403)  // forbidden
+      }
+
+      let updatedPost = new Post({
+        title: jsonData.title,
+        contents: jsonData.contents,
+        user: user,
+        timestamp: new Date(),
+        isPublished: jsonData.isPublished,
+        _id: req.params.postId
+      })
+
+
+      try {
+        const result = await Post.findByIdAndUpdate(req.params.postId, updatedPost, {});
+        if (!result) {
+          // post not found in database
+          return res.sendStatus(409)
+        }
+      } catch {
+        return res.json({
+          error: "postId incorrect or error"
+        })
+      }
+
+      // update success
+      res.json({
+        message: `updated post, id : ${req.params.postId}`,
+        updatedPost,
+      })
+
+    })
+  })
+]
 // Get 1 post
-exports.posts_delete = asyncHandler(async (req, res, next) => {
-  res.send(`deleting ${req.params.postId}`);
-})
+exports.posts_delete = [
 
+  verifyTokenExist,
+
+  asyncHandler(async (req, res, next) => {
+    jwt.verify(req.token, process.env.JWT_SECRET_KEY, async (err, authData) => {
+      if (err) {
+        return res.sendStatus(403)  // forbidden
+      }
+
+      const user = await User.findOne({ username: authData.user.username });
+      // not an admin, denied
+      if (!user.isAdmin) {
+        return res.sendStatus(403)  // forbidden
+      }
+
+      try {
+        const result = await Post.findByIdAndDelete(req.params.postId, {});
+        if (!result) {
+          // post not found in database
+          return res.sendStatus(409)
+        }
+      } catch {
+        return res.json({
+          error: "postId incorrect or error"
+        })
+      }
+
+      // deleted success
+      res.json({
+        message: `deleted post, id : ${req.params.postId}`,
+      })
+
+    })
+  })
+]
