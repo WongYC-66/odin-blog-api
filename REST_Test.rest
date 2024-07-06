@@ -5,32 +5,38 @@ content-type: application/json
     "username": "user1",
     "password": "user1"
 }
+###
+admin1 : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODhmODRlMzYwNDBhNjk0ZjI4ZDU0NCIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjUzNTQzLCJleHAiOjE3MjAzMzk5NDN9.kVwCfTUkz_-gZznhJtnTWtW72mOsu9VPung8nHUSrpk
+
+user1 : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidXNlcjEiLCJfaWQiOiI2Njg4ZmU4NTRkZDgwY2ZiYTFlMjY4NjYiLCJfX3YiOjB9LCJpYXQiOjE3MjAyNTQwODV9.uGd62CgD1iNKzlEG_Pvgvx5IkLBYnqZv6oJPFM2MhFs
+
+###
 
 ###
 POST http://localhost:3000/v1/user/sign-up/
 content-type: application/json
 
 {
-    "username": "admin3",
-    "password": "admin3",
-    "confirmPassword": "admin3",
-    "adminCode": "12345678"
+    "username": "user1",
+    "password": "user1",
+    "confirmPassword": "user1",
+    "adminCode": "1234567811"
 }
 
 ###
 GET http://localhost:3000/v1/posts
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODYzMzE0ZDg3YTg0NzUzMjc5MjNhMSIsInVzZXJuYW1lIjoidXNlcjEiLCJfX3YiOjB9LCJpYXQiOjE3MjAxOTEzMDYsImV4cCI6MTcyMDI3NzcwNn0.hrcvCoHqeajftwhYs_2t20oM13gLtevKlRpACL8W0UY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODhmODRlMzYwNDBhNjk0ZjI4ZDU0NCIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjUzNTQzLCJleHAiOjE3MjAzMzk5NDN9.kVwCfTUkz_-gZznhJtnTWtW72mOsu9VPung8nHUSrpk
 
 ###
 POST http://localhost:3000/v1/posts
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODYzMjVhNjFjNmMxNGQwYWFhZWMwOSIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMTkxNjY2LCJleHAiOjE3MjAyNzgwNjZ9.eAeoEjlj19T4yohbqaVfldjSJZfiNjQweSkPD0kcGes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODhmODRlMzYwNDBhNjk0ZjI4ZDU0NCIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjUzNTQzLCJleHAiOjE3MjAzMzk5NDN9.kVwCfTUkz_-gZznhJtnTWtW72mOsu9VPung8nHUSrpk
 
 {
-    "title": "test-title",
-    "contents": "test-title",
-    "isPublished": "true"
+    "title": "test-title-5",
+    "contents": "test-title-5",
+    "isPublished": "false"
 }
 
 ###

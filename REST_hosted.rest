@@ -1,4 +1,4 @@
-POST https://blog-api-ycwong66.adaptable.app/v1/user/sign-in/
+POST https://odin-blog-api-ycwong66.adaptable.app/v1/user/sign-in/
 content-type: application/json
 
 {
@@ -11,7 +11,7 @@ content-type: application/json
 
  user1  - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzM3MjVmMGM4YTU3ZjhhZTE0NSIsInVzZXJuYW1lIjoidXNlcjEiLCJfX3YiOjB9LCJpYXQiOjE3MjAyMDAyNTMsImV4cCI6MTcyMDI4NjY1M30.kXqcceqUlAD3z4nkFAfooiyLRd0dh8ClyoBpbYzvv60
 ###
-POST https://blog-api-ycwong66.adaptable.app/v1/user/sign-up/
+POST https://odin-blog-api-ycwong66.adaptable.app/v1/user/sign-up/
 content-type: application/json
 
 {
@@ -22,12 +22,12 @@ content-type: application/json
 }
 
 ###
-GET https://blog-api-ycwong66.adaptable.app/v1/posts
+GET https://odin-blog-api-ycwong66.adaptable.app/v1/posts
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
 ###
-POST https://blog-api-ycwong66.adaptable.app/v1/posts
+POST https://odin-blog-api-ycwong66.adaptable.app/v1/posts
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
@@ -38,13 +38,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6I
 }
 
 ###
-GET https://blog-api-ycwong66.adaptable.app/v1/posts/66882cc425f0c8a57f8ae14e
+GET https://odin-blog-api-ycwong66.adaptable.app/v1/posts/66882cc425f0c8a57f8ae14e
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
 ###
 
-PUT https://blog-api-ycwong66.adaptable.app/v1/posts/66882cc425f0c8a57f8ae14e
+PUT https://odin-blog-api-ycwong66.adaptable.app/v1/posts/66882cc425f0c8a57f8ae14e
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
@@ -55,7 +55,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6I
 }
 
 ###
-DELETE https://blog-api-ycwong66.adaptable.app/v1/posts/66882e6225f0c8a57f8ae165
+DELETE https://odin-blog-api-ycwong66.adaptable.app/v1/posts/66882e6225f0c8a57f8ae165
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
@@ -64,11 +64,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6I
 ###
 
 ###
-GET https://blog-api-ycwong66.adaptable.app/v1/comments/66882cc425f0c8a57f8ae14e/
+GET https://odin-blog-api-ycwong66.adaptable.app/v1/comments/66882cc425f0c8a57f8ae14e/
 content-type: application/json
 
 ###
-POST https://blog-api-ycwong66.adaptable.app/v1/comments/66882cc425f0c8a57f8ae14e/
+POST https://odin-blog-api-ycwong66.adaptable.app/v1/comments/66882cc425f0c8a57f8ae14e/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
@@ -77,7 +77,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6I
 }
 
 ###
-PUT https://blog-api-ycwong66.adaptable.app/v1/comments/66882ec825f0c8a57f8ae17b/
+PUT https://odin-blog-api-ycwong66.adaptable.app/v1/comments/66882ec825f0c8a57f8ae17b/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 
@@ -86,7 +86,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6I
 }
 
 ###
-DELETE https://blog-api-ycwong66.adaptable.app/v1/comments/66882f0d25f0c8a57f8ae18c/
+DELETE https://odin-blog-api-ycwong66.adaptable.app/v1/comments/66882f0d25f0c8a57f8ae18c/
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODgyYzBhMjVmMGM4YTU3ZjhhZTE0MiIsInVzZXJuYW1lIjoiYWRtaW4xIiwiX192IjowfSwiaWF0IjoxNzIwMjAwMjgwLCJleHAiOjE3MjAyODY2ODB9.4tLLG1o1VsQ1IcbOpGXaS3MReHMpqhjceIOd1N1oCTY
 

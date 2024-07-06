@@ -4,32 +4,41 @@ var jwt = require('jsonwebtoken')
 const Post = require('../model/post')
 const User = require('../model/user')
 
-const verifyTokenExist = require('../controllers/jwt').verifyTokenExist
+const { verifyTokenExist, extractToken } = require('../controllers/jwt')
 
 // GET list of all posts
-exports.posts_lists = [
+exports.posts_lists = asyncHandler(async (req, res, next) => {
 
-  verifyTokenExist,
+  let allPosts = await Post.find()
+    .populate("user")
+    .select("-password")
+    .sort({ timestamp: -1 })
+    .exec()
 
-  asyncHandler(async (req, res, next) => {
-    jwt.verify(req.token, process.env.JWT_SECRET_KEY, async (err, authData) => {
-      if (err) {
-        return res.sendStatus(403)  // forbidden
-      }
+  // if GET request is sent with valid token
+  const token = extractToken(req)
+  try {
+    // if is admin, getting pusblished and un-published
+    const authData = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    if (!authData.user || !authData.user.username)
+      throw Error()
 
-      let allPosts = await Post.find()
-        .populate("user")
-        .select("-password")
-        .sort({ timestamp: -1 })
-        .exec()
+    const user = await User.findOne({ username: authData.user.username });
 
-      res.json({
-        message: 'getting all posts_list',
-        allPosts,
-      })
-    })
+    // user not found, or not an admin
+    if (!user || !user.isAdmin) 
+      throw Error()
+
+  } catch {
+    // if not admin, filter 
+    allPosts = allPosts.filter(p => p.isPublished)
+  }
+
+  res.json({
+    message: 'getting all posts_list',
+    allPosts,
   })
-]
+})
 
 // POST 1 new post
 exports.posts_create_post = [
@@ -53,7 +62,7 @@ exports.posts_create_post = [
 
       const user = await User.findOne({ username: authData.user.username });
       // not an admin, denied
-      if (!user.isAdmin) {
+      if (!user || !user.isAdmin) {
         return res.sendStatus(403)  // forbidden
       }
 
