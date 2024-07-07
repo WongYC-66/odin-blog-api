@@ -26,7 +26,7 @@ exports.posts_lists = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ username: authData.user.username });
 
     // user not found, or not an admin
-    if (!user || !user.isAdmin) 
+    if (!user || !user.isAdmin)
       throw Error()
 
   } catch {
@@ -86,43 +86,54 @@ exports.posts_create_post = [
 ]
 
 // Get 1 post detail from postId
-exports.posts_read_get = [
+exports.posts_read_get = asyncHandler(async (req, res, next) => {
 
-  verifyTokenExist,
-
-  asyncHandler(async (req, res, next) => {
-    jwt.verify(req.token, process.env.JWT_SECRET_KEY, async (err, authData) => {
-      if (err) {
-        return res.sendStatus(403)  // forbidden
-      }
-
-      try {
-
-        let post = await Post.findById(req.params.postId)
-          .populate("user")
-          .select("-password")
-          .exec()
-
-        if (!post) {
-          // post not found in database
-          return res.sendStatus(409)
-        }
-
-        // read success
-        res.json({
-          message: `getting post by id : ${req.params.postId}`,
-          post,
-        })
-
-      } catch {
-        return res.json({
-          error: "postId incorrect or error"
-        })
-      }
-
+  try {
+    var post = await Post.findById(req.params.postId)
+      .populate("user")
+      .select("-password")
+      .exec()
+  } catch {
+    // postId error or  not found in database
+    return res.json({
+      error: "postId incorrect or error"
     })
-  })
-]
+  }
+
+  if (post.isPublished) {
+    // read success
+    return res.json({
+      message: `getting post by id : ${req.params.postId}`,
+      post,
+    })
+  }
+
+  // un-published post, need to verify if is admin
+  const token = extractToken(req)
+  try {
+    const authData = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    if (!authData.user && !authData.user.username) {
+      throw Error()
+    }
+
+    const user = await User.findOne({ username: authData.user.username });
+
+    // user not found or not ad admin
+    if (!user || !user.isAdmin)
+      throw Error()
+
+    // read success
+    return res.json({
+      message: `getting post by id : ${req.params.postId}`,
+      post,
+    })
+
+  } catch {
+    // if not admin, filter 
+    return res.sendStatus(403)
+  }
+
+});
 
 // Update 1 previous post
 exports.posts_update_put = [
@@ -181,7 +192,7 @@ exports.posts_update_put = [
     })
   })
 ]
-// Get 1 post
+// Delete 1 post
 exports.posts_delete = [
 
   verifyTokenExist,
