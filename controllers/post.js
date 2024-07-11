@@ -54,7 +54,7 @@ exports.posts_create_post = [
       let jsonData = req.body
 
       // missing update params
-      if (!jsonData.title || !jsonData.contents || !jsonData.isPublished) {
+      if (!jsonData.title || !jsonData.contents || jsonData.isPublished === '') {
         return res.json({
           error: "Missing API input params"
         })
@@ -147,9 +147,10 @@ exports.posts_update_put = [
       }
 
       let jsonData = req.body
+      console.log(jsonData)
 
       // missing update params
-      if (!jsonData.title || !jsonData.contents || !jsonData.isPublished) {
+      if (!jsonData.title || !jsonData.contents || jsonData.isPublished === '') {
         return res.json({
           error: "Missing API input params"
         })
