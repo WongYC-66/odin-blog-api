@@ -3,6 +3,7 @@ var jwt = require('jsonwebtoken')
 
 const Post = require('../model/post')
 const User = require('../model/user')
+const Comment = require('../model/comment')
 
 const { verifyTokenExist, extractToken } = require('../controllers/jwt')
 
@@ -216,6 +217,10 @@ exports.posts_delete = [
           // post not found in database
           return res.sendStatus(409)
         }
+
+        // then delete all the comments belong to the post
+        await Comment.deleteMany({ postId: req.params.postId });
+
       } catch {
         return res.json({
           error: "postId incorrect or error"
