@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "odin-blog-api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -26,5 +26,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
   }
 }
